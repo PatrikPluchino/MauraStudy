@@ -5,5 +5,6 @@ clc
 
 % Paths
 tic
-[eye, RAW] = convertBlinkTxt2Mat('/Users/filippominelle/Documents/MauraStudy/Maura_Blink.txt');
+[eye] = convertBlinkTxt2Mat(which('Maura_Blink.txt'));
+save('fileMat', 'eye');
 toc

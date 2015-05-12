@@ -3,4 +3,4 @@
 # Control
 stopifnot(require("R.matlab"))
 
-mat <- readMat(file)
+mat <- readMat("path/.../fileMat.mat")
