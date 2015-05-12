@@ -5,5 +5,5 @@ clc
 
 % Paths
 tic
-[eye, RAW] = convertBlinkTxt2Mat();
+[eye, RAW] = convertBlinkTxt2Mat('/Users/filippominelle/Documents/MauraStudy/Maura_Blink.txt');
 toc
