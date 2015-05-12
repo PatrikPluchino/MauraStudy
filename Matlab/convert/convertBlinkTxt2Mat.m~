@@ -59,7 +59,7 @@ try
         
         for icRAW = 1 : cRAW
             if strfind(RAW{1, icRAW}, 'Trial')
-                eye.blink.stimulus. = fix(str2double(RAW((2:end), icRAW)));
+                eye.blink.stimulus.name = RAW((2:end), icRAW);
             elseif strfind(RAW{1, icRAW}, 'Subject')
                 eye.blink.subject = fix(str2double(RAW((2:end), icRAW)));
             elseif strfind(RAW{1, icRAW}, 'Color')
@@ -83,10 +83,25 @@ try
             end
         end
         
-        for irRAW = 1 : rRAW
-            if strfind(RAW{1, icRAW}, 'Trial')
+        nBlink = length(eye.blink.stimulus.name)
+        
+        for iBlink = 1 : nBlink
+            % Numerosity
+            if strfind(eye.blink.stimulus.name, '9')
+                eye.blink.numerosity(iBlink, 1) = 1;
+            else
+                eye.blink.numerosity(iBlink, 1) = 2;
+            end
+            % Disposition
+            if strfind(eye.blink.stimulus.name, 'mix')
+                eye.blink.disposition(iBlink, 1) = 1;
+            elseif strfind(eye.blink.stimulus.name, 'tot')
+                eye.blink.disposition(iBlink, 1) = 2;
+            else
+                eye.blink.disposition(iBlink, 1) = 3;
             end
             
+            % Detailed Disposition
         end
         
     else

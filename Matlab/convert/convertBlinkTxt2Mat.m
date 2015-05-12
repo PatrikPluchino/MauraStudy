@@ -1,8 +1,8 @@
-function [eye, RAW] = convertBlinkTxt2Mat(input, checkSave)
+function [eye] = convertBlinkTxt2Mat(input, checkSave)
 % Convert the Blink idf-converted file into a .mat struct.
 %
 %   Syntax:
-%          [eye, RAW] = convertBlinkTxt2Mat(input, checkSave)
+%          [eye] = convertBlinkTxt2Mat(input, checkSave)
 %
 %   Parameters:
 %           input                   file name of the blink idf-converted
@@ -83,10 +83,36 @@ try
             end
         end
         
-        for irRAW = 1 : rRAW
-            if strfind(RAW{1, icRAW}, 'Trial')
+        nBlink = length(eye.blink.stimulus.name);
+        
+        for iBlink = 1 : nBlink
+            % Numerosity
+            if strfind(eye.blink.stimulus.name{iBlink, 1}, '9')
+                eye.blink.numerosity(iBlink, 1) = 1;
+            else
+                eye.blink.numerosity(iBlink, 1) = 2;
+            end
+            % Disposition
+            if strfind(eye.blink.stimulus.name{iBlink, 1}, 'mix')
+                eye.blink.disposition(iBlink, 1) = 1;
+                if strfind(eye.blink.stimulus.name{iBlink, 1}, 'in')
+                    eye.blink.detailed_disposition(iBlink, 1) = 11;
+                else
+                    eye.blink.detailed_disposition(iBlink, 1) = 12;
+                end
+            elseif strfind(eye.blink.stimulus.name{iBlink, 1}, 'tot')
+                eye.blink.disposition(iBlink, 1) = 2;
+                if strfind(eye.blink.stimulus.name{iBlink, 1}, 'in')
+                    eye.blink.detailed_disposition(iBlink, 1) = 21;
+                else
+                    eye.blink.detailed_disposition(iBlink, 1) = 22;
+                end
+            else
+                eye.blink.disposition(iBlink, 1) = 3;
+                eye.blink.detailed_disposition(iBlink, 1) = 3;
             end
             
+            % Detailed Disposition
         end
         
     else
